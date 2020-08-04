@@ -1,0 +1,37 @@
+---
+title: "My Eiffel Tower Map"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## August 4, 2020
+
+```{r map, echo=FALSE}
+library(leaflet)
+
+eiffelIcon <- makeIcon(
+        iconUrl = "http://www.pngall.com/wp-content/uploads/2016/06/Eiffel-Tower-PNG-Image.png",
+        iconWidth = 40*215/230, iconHeight = 51, 
+        iconAnchorX = 31*215/230/2, iconAnchorY = 16
+)
+
+eiffelSites <- c(
+        "<a href='https://www.youtube.com/watch?v=dcHlUO3BJPE'>Eiffel Tower Paris</a>",
+        "<a href='https://www.youtube.com/watch?v=3G6rWccBGdU'>Eiffel Tower Tianducheng</a>",
+        "<a href='https://www.youtube.com/watch?v=0p7We0x3MeQ'>Eiffel Tower Las Vegas</a>",
+        "<a href='https://www.youtube.com/watch?v=Q2sr7PatQsY'>Eiffel Tower Lahore</a>"
+)
+
+parisLatLong <- data.frame(lat = c(48.858093, 30.391370, 36.112544, 31.357222), lng = c(2.294694, 120.243774, -115.172857, 74.184605))
+
+my_map <- parisLatLong %>% 
+        leaflet() %>% 
+        addTiles() %>%
+        addMarkers(icon = eiffelIcon, popup = eiffelSites)
+my_map
+```
+
+#### Did you know that there are over 80 eiffel towers around the world? Check out a few of them in the popup links in the map.
