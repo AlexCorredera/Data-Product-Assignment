@@ -1,0 +1,34 @@
+---
+title: "My Plotly Plot"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## August 5, 2020
+
+```{r plotly, echo=FALSE, message=FALSE, warning=FALSE}
+
+library(plotly, quietly = TRUE)
+
+state_inc <- data.frame(state = state.abb, income = state.x77[,2])
+
+state_inc$hover <- with(state_inc, paste(state, '<br>', "Income per capita"))
+
+borders <- list(color = toRGB("red"))
+
+map_options <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white')
+)
+
+plot_ly(z = ~state_inc$income, text = ~state_inc$hover, locations = ~state_inc$state, 
+        type = 'choropleth', locationmode = 'USA-states', 
+        color = state_inc$income, colors = 'Greens', marker = list(line = borders)) %>%
+  layout(title = 'US Income Per Capita in 1975', geo = map_options)
+
+```
